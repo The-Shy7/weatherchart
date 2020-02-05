@@ -52,6 +52,10 @@ async function search({searchTerm, set}) {
   if (!loc[0]) {
     return set({error:'No city matching that query'})
   }
+
+  const city = loc[0]
+  console.log(city.lat, city.lon)
+  const key = 'ff44717dec09b51014ff551f271f55ed'
 }
 
 export default App;
