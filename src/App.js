@@ -16,7 +16,7 @@ function App() {
   
     <div className="App">
       <Header/>
-      {state.error && <div>{state.error}</div>}
+      <Body/>
     </div>
   </context.Provider>
 }
@@ -39,6 +39,17 @@ function Header() {
       Search
     </Button>
   </header>
+}
+
+function Body() {
+  const ctx = useContext(context)
+
+  return <div className="App-body">
+    {ctx.error && <div className="error">{ctx.error}</div>}
+    {ctx.weather && <div>
+    
+    </div>}
+  </div>
 }
 
 async function search({searchTerm, set}) {
