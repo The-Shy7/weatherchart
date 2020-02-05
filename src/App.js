@@ -23,13 +23,22 @@ function App() {
 function Header() {
   const ctx = useContext(context)
 
+  function search() {
+
+  }
+
   return <header className="App-header">
     <Input 
       value={ctx.searchTerm}
       onChange={e => ctx.set({searchTerm: e.target.value})}
       style={{height:'3rem',fontSize:'2rem'}}
+      onKeyPress={e=>{
+        if (e.key === 'Enter' && ctx.searchTerm) search()
+      }}
     />
-    <Button style={{marginLeft:5,height:'3rem'}}>
+    <Button style={{marginLeft:5,height:'3rem'}}
+      onClick={search} type="primary"
+      disabled={!ctx.searchTerm}>
       Search
     </Button>
   </header>
