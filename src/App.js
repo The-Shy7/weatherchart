@@ -56,6 +56,7 @@ async function search({searchTerm, set}) {
   const city = loc[0]
   console.log(city.lat, city.lon)
   const key = 'ff44717dec09b51014ff551f271f55ed'
+  const url = `https://api.darksky.net/forecast/${key}/${city.lat},${city.lon}`
 }
 
 export default App;
