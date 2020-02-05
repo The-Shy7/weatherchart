@@ -42,24 +42,28 @@ function Header() {
 }
 
 async function search({searchTerm, set}) {
-  const term = searchTerm
-  set({searchTerm:'', error:''})
-
-  const osmurl = `https://nominatim.openstreetmap.org/search/${searchTerm}?format=json`
-  const r = await fetch(osmurl)
-  const loc = await r.json()
-
-  if (!loc[0]) {
-    return set({error:'No city matching that query'})
+  try {
+    const term = searchTerm
+    set({searchTerm:'', error:''})
+  
+    const osmurl = `https://nominatim.openstreetmap.org/search/${searchTerm}?format=json`
+    const r = await fetch(osmurl)
+    const loc = await r.json()
+  
+    if (!loc[0]) {
+      return set({error:'No city matching that query'})
+    }
+  
+    const city = loc[0]
+    console.log(city.lat, city.lon)
+    const key = 'ff44717dec09b51014ff551f271f55ed'
+    const url = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/${key}/${city.lat},${city.lon}`
+    const r2 = await fetch(url)
+    const weather = await r2.json()
+    set({weather})
+  } catch(e) {
+    set({error: e.message})
   }
-
-  const city = loc[0]
-  console.log(city.lat, city.lon)
-  const key = 'ff44717dec09b51014ff551f271f55ed'
-  const url = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/${key}/${city.lat},${city.lon}`
-  const r2 = await fetch(url)
-  const weather = await r2.json()
-  console.log(weather)
 }
 
 export default App;
