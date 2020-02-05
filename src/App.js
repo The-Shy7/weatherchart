@@ -1,6 +1,7 @@
 import React, {useContext, useState} from 'react';
 import './App.css';
 import {Input, Button} from 'antd'
+import {Bar} from 'react-chartjs-2'
 
 const context = React.createContext()
 
@@ -43,6 +44,7 @@ function Header() {
 
 function Body() {
   const ctx = useContext(context)
+  const data = ctx.weather && 
 
   return <div className="App-body">
     {ctx.error && <div className="error">{ctx.error}</div>}
