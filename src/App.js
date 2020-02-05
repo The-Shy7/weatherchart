@@ -1,6 +1,8 @@
-import React, {useState} from 'react';
+import React, {useContext} from 'react';
 import './App.css';
 import {Input, Button} from 'antd'
+
+const context = React.createContext()
 
 function App() {
   return (
@@ -11,8 +13,6 @@ function App() {
 }
 
 function Header() {
-  const [text, setText] = useState('')
-
   return <header className="App-header">
     <Input 
       style={{height:'3rem',fontSize:'2rem'}}
