@@ -16,6 +16,7 @@ function App() {
   
     <div className="App">
       <Header/>
+      {state.error && <div>{state.error}</div>}
     </div>
   </context.Provider>
 }
@@ -40,8 +41,17 @@ function Header() {
   </header>
 }
 
-function search({searchTerm, setSearchTerm}) {
+async function search({searchTerm, set}) {
+  console.log(searchTerm)
+  set({searchTerm:'', error:''})
 
+  const osmurl = `https://nominatim.openstreetmap.org/search/${searchTerm}?format=json`
+  const r = await fetch(osmurl)
+  const loc = await r.json()
+
+  if (!loc[0]) {
+    return set({error:'No city matching that query'})
+  }
 }
 
 export default App;
