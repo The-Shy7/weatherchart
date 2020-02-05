@@ -5,7 +5,9 @@ import {Input, Button} from 'antd'
 const context = React.createContext()
 
 function App() {
-  const [state, setState] = useState({})
+  const [state, setState] = useState({
+    searchTerm:''
+  })
 
   return <context.Provider value={{
     ...state,
@@ -23,6 +25,8 @@ function Header() {
 
   return <header className="App-header">
     <Input 
+      value={ctx.searchTerm}
+      onChange={e => ctx.set({searchTerm: e.target.value})}
       style={{height:'3rem',fontSize:'2rem'}}
     />
     <Button style={{marginLeft:5,height:'3rem'}}>
