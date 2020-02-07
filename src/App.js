@@ -94,7 +94,7 @@ async function search({searchTerm, set}){
 
     //const url = `/api?lat=${city.lat}&lon=${city.lon}`
     const key = 'ff44717dec09b51014ff551f271f55ed'
-    const url = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/${key}/${city.lat},${city.lon}`
+    const url = `/api?lat=${city.lat},$lon${city.lon}`
     const r2 = await fetch(url)
     const weather = await r2.json()
     set({searchTerm:'', weather, loading:false})
