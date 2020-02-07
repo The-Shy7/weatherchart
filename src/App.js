@@ -23,9 +23,10 @@ function App() {
 
 function Header(){
   const ctx = useContext(context)
+  const {loading, searchTerm} = ctx
   return <header className="App-header">
     <Input 
-      value={ctx.searchTerm}
+      value={ctx.searchTerm} disabled={loading}
       onChange={e=> ctx.set({searchTerm: e.target.value})}
       style={{height:'3rem',fontSize:'2rem'}} 
       onKeyPress={e=>{
@@ -34,7 +35,7 @@ function Header(){
     />
     <Button style={{marginLeft:5,height:'3rem'}}
       onClick={()=> search(ctx)} type="primary"
-      disabled={!ctx.searchTerm}>
+      disabled={!ctx.searchTerm} loading={loading}>
       Search
     </Button>
   </header>
@@ -47,7 +48,7 @@ function Body(){
   if(weather){
     console.log(weather)
     data = {
-      labels: weather.hourly.data.map(d=>moment(d.time).format()),
+      labels: weather.hourly.data.map(d=>moment(d.time*1000).format('ddd hh;mm')),
       datasets: [{
         label:'Temperature',
         data: weather.hourly.data.map(d=>d.temperature)
@@ -68,7 +69,7 @@ function Body(){
 async function search({searchTerm, set}){
   try {
     const term = searchTerm
-    set({searchTerm:'', error:''})
+    set({error:'', loading:true})
 
     const osmurl = `https://nominatim.openstreetmap.org/search/${term}?format=json`
     const r = await fetch(osmurl)
@@ -83,7 +84,7 @@ async function search({searchTerm, set}){
     const url = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/${key}/${city.lat},${city.lon}`
     const r2 = await fetch(url)
     const weather = await r2.json()
-    set({weather})
+    set({searchTerm:'', weather, loading:false})
   } catch(e) {
     set({error: e.message})
   }
