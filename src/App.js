@@ -54,7 +54,7 @@ function Body(){
   if(weather){
     console.log(weather)
     data = {
-      labels: weather[mode].data.map(d=>moment(d.time*1000).format('ddd hh;mm')),
+      labels: weather[mode].data.map(d=>moment(d.time*1000).format('ddd hh:mm')),
       datasets: [{
         label:'Temperature',
         data: weather[mode].data.map(d=>{
