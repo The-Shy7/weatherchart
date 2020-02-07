@@ -2,6 +2,7 @@ import React, {useContext, useState} from 'react'
 import './App.css'
 import {Input, Button} from 'antd'
 import {Bar} from 'react-chartjs-2'
+import * as moment from 'moment'
 
 const context = React.createContext()
 
@@ -46,7 +47,7 @@ function Body(){
   if(weather){
     console.log(weather)
     data = {
-      labels: weather.hourly.data.map(d=>d.time),
+      labels: weather.hourly.data.map(d=>moment(d.time).format()),
       datasets: [{
         label:'Temperature',
         data: weather.hourly.data.map(d=>d.temperature)
