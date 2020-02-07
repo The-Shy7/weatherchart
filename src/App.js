@@ -5,10 +5,12 @@ import {Bar} from 'react-chartjs-2'
 import * as moment from 'moment'
 
 const context = React.createContext()
+const ButtonGroup = Button.Group
 
 function App() {
   const [state, setState] = useState({
     searchTerm:'',
+    mode:'hourly'
   })
   return <context.Provider value={{
     ...state,
@@ -23,7 +25,7 @@ function App() {
 
 function Header(){
   const ctx = useContext(context)
-  const {loading, searchTerm} = ctx
+  const {loading, mode} = ctx
   return <header className="App-header">
     <Input 
       value={ctx.searchTerm} disabled={loading}
@@ -38,6 +40,10 @@ function Header(){
       disabled={!ctx.searchTerm} loading={loading}>
       Search
     </Button>
+    <ButtonGroup style={{marginLeft:5, display:'flex'}}>
+      <Button style={{height:'3rem'}} type={mode==='hourly'?'primary':'default'} onClick={()=>ctx.set({mode:'hourly'})}>Hourly</Button>
+      <Button style={{height:'3rem'}} type={mode==='daily'?'primary':'default'} onClick={()=>ctx.set({mode:'daily'})}>Daily</Button>
+    </ButtonGroup>
   </header>
 }
 
@@ -51,9 +57,11 @@ function Body(){
       labels: weather.hourly.data.map(d=>moment(d.time*1000).format('ddd hh;mm')),
       datasets: [{
         label:'Temperature',
-        data: weather.hourly.data.map(d=>d.temperature)
-        backgroundColor:'rgb(150,50,250)'
-        borderColor:''
+        data: weather.hourly.data.map(d=>d.temperature),
+        backgroundColor: 'rgba(235,0,0,0.2)',
+        borderColor: 'rgba(132,99,255,1)',
+        hoverBackgroundColor: 'rgba(132,99,255,0.4)',
+        hoverBorderColor: 'rgba(132,99,255,1)'
       }]
     }
   }
