@@ -110,8 +110,8 @@ async function search({searchTerm, set}){
   }
 }
 
-export default App;
-
 function cap(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+export default App;
