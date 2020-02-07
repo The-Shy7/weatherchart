@@ -52,6 +52,8 @@ function Body(){
       datasets: [{
         label:'Temperature',
         data: weather.hourly.data.map(d=>d.temperature)
+        backgroundColor:'rgb(150,50,250)'
+        borderColor:''
       }]
     }
   }
