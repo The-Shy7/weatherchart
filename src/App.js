@@ -49,15 +49,18 @@ function Header(){
 
 function Body(){
   const ctx = useContext(context)
-  const {error, weather} = ctx
+  const {error, weather, mode} = ctx
   let data
   if(weather){
     console.log(weather)
     data = {
-      labels: weather.hourly.data.map(d=>moment(d.time*1000).format('ddd hh;mm')),
+      labels: weather[mode].data.map(d=>moment(d.time*1000).format('ddd hh;mm')),
       datasets: [{
         label:'Temperature',
-        data: weather.hourly.data.map(d=>d.temperature),
+        data: weather[mode].data.map(d=>{
+          if (mode==='hourly') return d.temperature
+          else return (d.temperatureHigh+d.temperatureLow)/2
+        }),
         backgroundColor: 'rgba(235,0,0,0.2)',
         borderColor: 'rgba(132,99,255,1)',
         hoverBackgroundColor: 'rgba(132,99,255,0.4)',
